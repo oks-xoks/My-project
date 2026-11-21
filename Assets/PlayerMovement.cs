@@ -3,13 +3,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    private Rigidbody rb;
 
-    private void Update()
+    private void Awake()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A/D или стрелки
-        float vertical = Input.GetAxis("Vertical");     // W/S или стрелки
+        rb = GetComponent<Rigidbody>();
+    }
 
-        Vector3 movement = new Vector3(horizontal, 0f, vertical);
-        transform.position += movement * moveSpeed * Time.deltaTime;
+    private void FixedUpdate()
+    {
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 move = new Vector3(h, 0f, v);
+        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
     }
 }
